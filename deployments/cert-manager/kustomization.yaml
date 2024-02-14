@@ -8,3 +8,18 @@ helmCharts:
   repo:  https://charts.jetstack.io
   valuesInline:
     installCRDs: true
+    nodeSelector:
+      cloud.google.com/gke-spot: "true"
+      kubernetes.io/os: linux
+    webhook:
+      nodeSelector:
+        kubernetes.io/os: linux
+        cloud.google.com/gke-spot: "true"
+    cainjector:
+      nodeSelector:
+        kubernetes.io/os: linux
+        cloud.google.com/gke-spot: "true"
+    startupapicheck:
+      nodeSelector:
+        kubernetes.io/os: linux
+        cloud.google.com/gke-spot: "true"
