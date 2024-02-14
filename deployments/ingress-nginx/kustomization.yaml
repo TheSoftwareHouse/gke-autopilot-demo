@@ -8,5 +8,15 @@ helmCharts:
   namespace: ingress-nginx
   repo: https://kubernetes.github.io/ingress-nginx
   valuesInline:
-    nodeSelector:
-      cloud.google.com/gke-spot: true
+    controller:
+      nodeSelector:
+        cloud.google.com/gke-spot: true
+        kubernetes.io/os: linux
+    admissionWebhooks:
+      nodeSelector:
+        kubernetes.io/os: linux
+        cloud.google.com/gke-spot: true
+    defaultBackend:
+      nodeSelector:
+        kubernetes.io/os: linux
+        cloud.google.com/gke-spot: true
