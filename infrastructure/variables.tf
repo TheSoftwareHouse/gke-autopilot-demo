@@ -56,6 +56,7 @@ variable "kubernetes_master_authorized_networks" {
 variable "sync_repo" {
   type        = string
   description = "git URL for the repo which will be sync'ed into the cluster via Config Management"
+  default     = "https://github.com/TheSoftwareHouse/gke-autopilot-demo"
 }
 
 variable "sync_branch" {
