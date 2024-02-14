@@ -34,10 +34,32 @@ resource "google_gke_hub_feature" "servicemesh_acm_feature" {
     google_project_service.services
   ]
 }
+# resource "google_gke_hub_feature" "policycontroller_acm_feature" {
+#   name = "policycontroller"
+#   location = "global"
+#   provider = google-beta
+#   depends_on = [
+#     google_project_service.services
+#   ]
+# }
+resource "google_gke_hub_feature_membership" "feature_member_policy_controller" {
+  provider   = google-beta
+  location   = "global"
+  feature    = "policycontroller"
+  membership = google_gke_hub_membership.membership.membership_id
+  policycontroller {
+    policy_controller_hub_config {
+      install_spec = "INSTALL_SPEC_ENABLED"
+    }
+  }
+  depends_on = [
+    google_project_service.services,
+  ]
+}
 resource "google_gke_hub_feature_membership" "feature_member_service_mesh" {
   provider   = google-beta
   location   = "global"
-  feature    = "servicemesh"
+  feature    = google_gke_hub_feature.servicemesh_acm_feature.name
   membership = google_gke_hub_membership.membership.membership_id
   mesh {
     management = "MANAGEMENT_AUTOMATIC"
@@ -51,7 +73,7 @@ resource "google_gke_hub_feature_membership" "feature_member_service_mesh" {
 resource "google_gke_hub_feature_membership" "feature_member" {
   provider   = google-beta
   location   = "global"
-  feature    = "configmanagement"
+  feature    = google_gke_hub_feature.configmanagement_acm_feature.name
   membership = google_gke_hub_membership.membership.membership_id
   configmanagement {
     version = "1.17.1"
