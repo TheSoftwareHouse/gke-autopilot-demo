@@ -19,9 +19,9 @@ variable "default_labels" {
   description = "The default labels to apply to all resources"
   type        = map(string)
   default = {
-    Created_by = "wwojcik"
-    Env        = "dev"
-    Team       = "devops"
+    created_by = "wwojcik"
+    env        = "dev"
+    team       = "devops"
   }
 }
 variable "kubernetes_cluster_name" {

@@ -1,3 +1,13 @@
+# Declare a fleet in the project
+resource "google_gke_hub_fleet" "default" {
+  display_name = "devops-sandbox"
+  depends_on = [
+    google_project_service.services
+  ]
+}
+
+
+
 resource "google_gke_hub_membership" "membership" {
   provider      = google-beta
   membership_id = "membership-hub-${module.gke.name}"
@@ -12,11 +22,30 @@ resource "google_gke_hub_feature" "configmanagement_acm_feature" {
   name     = "configmanagement"
   location = "global"
   provider = google-beta
+  depends_on = [
+    google_project_service.services
+  ]
 }
 resource "google_gke_hub_feature" "servicemesh_acm_feature" {
   name     = "servicemesh"
   location = "global"
   provider = google-beta
+  depends_on = [
+    google_project_service.services
+  ]
+}
+resource "google_gke_hub_feature_membership" "feature_member_service_mesh" {
+  provider   = google-beta
+  location   = "global"
+  feature    = "servicemesh"
+  membership = google_gke_hub_membership.membership.membership_id
+  mesh {
+    management = "MANAGEMENT_AUTOMATIC"
+  }
+  depends_on = [
+    google_project_service.services,
+    google_gke_hub_feature.servicemesh_acm_feature
+  ]
 }
 
 resource "google_gke_hub_feature_membership" "feature_member" {
@@ -24,11 +53,8 @@ resource "google_gke_hub_feature_membership" "feature_member" {
   location   = "global"
   feature    = "configmanagement"
   membership = google_gke_hub_membership.membership.membership_id
-  mesh {
-    management = "MANAGEMENT_AUTOMATIC"
-  }
   configmanagement {
-    version = "1.8.0"
+    version = "1.17.1"
     config_sync {
       source_format = "unstructured"
       git {
@@ -41,7 +67,7 @@ resource "google_gke_hub_feature_membership" "feature_member" {
     }
   }
   depends_on = [
+    google_project_service.services,
     google_gke_hub_feature.configmanagement_acm_feature,
-    google_gke_hub_feature.servicemesh_acm_feature
   ]
 }

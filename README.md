@@ -1,6 +1,6 @@
 # GKE Demo
 
-Deployment of Google Kubernetes Engine with Autopilot, Service Mesh a Config Management features enabled.
+Deployment of Google Kubernetes Engine Enterprise with Autopilot, Service Mesh a Config Management features enabled.
 Creates also
 
 - basic network

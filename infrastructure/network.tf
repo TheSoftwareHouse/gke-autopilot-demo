@@ -3,12 +3,12 @@ module "vpc" {
   version      = "= 9.0"
   project_id   = var.project_id
   network_name = var.network_name
-
   subnets = [
     {
       subnet_name               = var.network_name
       subnet_ip                 = "10.2.204.0/22"
       subnet_region             = var.region
+      subnet_private_access     = "false"
       subnet_flow_logs          = "true"
       subnet_flow_logs_interval = "INTERVAL_10_MIN"
       subnet_flow_logs_sampling = 0.1
