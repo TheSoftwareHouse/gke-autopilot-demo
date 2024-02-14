@@ -9,6 +9,10 @@ helmCharts:
   repo: https://kubernetes.github.io/ingress-nginx
   valuesInline:
     controller:
+      replicaCount: 2
+      autoscaling:
+        enabled: true
+        minReplicas: 2
       nodeSelector:
         cloud.google.com/gke-spot: true
         kubernetes.io/os: linux
