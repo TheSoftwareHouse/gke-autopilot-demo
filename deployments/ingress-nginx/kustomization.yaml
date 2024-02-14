@@ -14,13 +14,13 @@ helmCharts:
         enabled: true
         minReplicas: 2
       nodeSelector:
-        cloud.google.com/gke-spot: true
+        cloud.google.com/gke-spot: "true"
         kubernetes.io/os: linux
     admissionWebhooks:
       nodeSelector:
         kubernetes.io/os: linux
-        cloud.google.com/gke-spot: true
+        cloud.google.com/gke-spot: "true"
     defaultBackend:
       nodeSelector:
         kubernetes.io/os: linux
-        cloud.google.com/gke-spot: true
+        cloud.google.com/gke-spot: "true"
