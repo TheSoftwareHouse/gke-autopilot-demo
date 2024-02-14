@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: TSH_GKE_Autopilot_Demo
+  namespace: tshinternal
+  description: TSH GKE Autopilot Demo
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: TheSoftwareHouse/gke-autopilot-demo
+spec:
+  type: infrastructure
+  owner: group:default/devops
+  lifecycle: experimental
