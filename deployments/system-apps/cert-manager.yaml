@@ -1,0 +1,31 @@
+apiVersion: configsync.gke.io/v1beta1
+kind: RootSync
+metadata:
+  name: cert-manager
+  namespace: config-management-system
+spec:
+  sourceFormat: unstructured
+  sourceType: helm
+  helm:
+    repo: https://charts.jetstack.io
+    chart: cert-manager
+    version: v1.14.2
+    releaseName: cert-manager
+    namespace: cert-manager
+    values:
+      installCRDs: true
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+        kubernetes.io/os: linux
+      webhook:
+        nodeSelector:
+          kubernetes.io/os: linux
+          cloud.google.com/gke-spot: "true"
+      cainjector:
+        nodeSelector:
+          kubernetes.io/os: linux
+          cloud.google.com/gke-spot: "true"
+      startupapicheck:
+        nodeSelector:
+          kubernetes.io/os: linux
+          cloud.google.com/gke-spot: "true"

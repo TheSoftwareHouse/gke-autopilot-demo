@@ -1,0 +1,31 @@
+apiVersion: configsync.gke.io/v1beta1
+kind: RootSync
+metadata:
+  name: ingress-nginx
+  namespace: config-management-system
+spec:
+  sourceFormat: unstructured
+  sourceType: helm
+  helm:
+    repo:  https://kubernetes.github.io/ingress-nginx
+    chart: ingress-nginx
+    version: 4.9.1
+    releaseName: ingress-nginx
+    namespace: ingress-nginx
+    values:
+      controller:
+        replicaCount: 2
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+        kubernetes.io/os: linux
+      admissionWebhooks:
+        nodeSelector:
+          kubernetes.io/os: linux
+          cloud.google.com/gke-spot: "true"
+      defaultBackend:
+        nodeSelector:
+          kubernetes.io/os: linux
+          cloud.google.com/gke-spot: "true"
